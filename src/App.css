@@ -1,3 +1,6 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 .App {
   text-align: center;
 }
@@ -27,7 +30,10 @@
 .App-link {
   color: #61dafb;
 }
-
+#bg{
+  background-image: url("././assets/img/bgroud.jpg");
+  background-size: cover;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
