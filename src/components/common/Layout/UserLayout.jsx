@@ -5,7 +5,7 @@ const UserLayout = ({children}) => {
   return (
     <div className='w-full max-w-full'>
        <Headers></Headers>
-       <div className=''>
+       <div className='scroll-smooth'>
         {children}
        </div>
        <Footer></Footer>
