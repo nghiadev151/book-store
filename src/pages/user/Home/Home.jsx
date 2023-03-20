@@ -1,8 +1,9 @@
-import { Carousel } from "antd";
 import React, { useEffect, useState } from "react";
 import UserLayout from "../../../components/common/Layout/UserLayout";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import Carousels from "./Carousel";
+import Sliders from "./Sliders";
+
 
 function Home() {
   const product = [
@@ -31,12 +32,8 @@ function Home() {
   return (
     <UserLayout>
       <Carousels></Carousels>
-      <div className="container mx-auto flex flex-wrap gap-8 justify-center " >
-        {products.map((product, index) => {
-          return <ProductCard key={index} product={product} />;
-        })}
-        ;
-      </div>
+      <Sliders products={products}/>
+      <Sliders products={products}/>
     </UserLayout>
   );
 }

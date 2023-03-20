@@ -20,8 +20,8 @@ function Headers() {
   ];
   const onSearch = (value) => console.log(value);
   return (
-    <div className="">
-      <div className="w-100" style={{ background: "#1B3764" }}>
+    <div className="sticky top-0 z-50 shadow-lg">
+      <div className="w-100 " style={{ background: "#1B3764" }}>
         <div className="py-10 container mx-auto">
           <div className="flex justify-between items-center">
               <div className="">
@@ -48,9 +48,9 @@ function Headers() {
         </div>
       </div>
       <div className="bg-white decoration-none shadow-sm flex basis-10/12 justify-center">
-        {menus.map((menu) => (
+        {menus.map((menu, i) => (
           <Link
-            to=""
+            to="" key={i}
             className="decoration-none my-3 mx-5 text-gray-500 hover:text-primary duration-300"
             style={{ fontSize: "20px" }}
           >
