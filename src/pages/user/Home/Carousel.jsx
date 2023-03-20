@@ -18,9 +18,9 @@ function Carousels() {
     ]
   return (
     <div>
-    <Carousel>
+    <Carousel autoplay>
     {banner.map((item, index) => (
-        <div className='overflow-hidden w-screen h-[35%]'>
+        <div key={index} className='overflow-hidden w-screen h-[35%]'>
             <img className='w-full h-[630px]' src={item.url} alt="" />
         </div>
     ))}
