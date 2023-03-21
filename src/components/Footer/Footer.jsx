@@ -14,7 +14,7 @@ function Footer() {
           <li>ACTICLES</li>
           <li>CAREERS</li>
           <li>SERVICE TERMS</li>
-          <li>DONATE</li>
+          
         </ul>
       </div>
       <div className='basis-1/6'>
