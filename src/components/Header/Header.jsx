@@ -7,7 +7,6 @@ import {
   FaUser,
   FaShoppingBag,
 } from "react-icons/fa";
-import "./styles.css";
 const { Search } = Input;
 function Headers() {
   const menus = [
@@ -28,7 +27,7 @@ function Headers() {
                 <img className="w-100" src={Logo} alt="" />
               </div>
               <div className="bg-white mr-20 pl-2 px-1 py-2 rounded-md flex justify-center items-center basis-1/3 h-10">
-                <input className="w-[100%] pr-2"  id="input" type="text" placeholder="Search..." />
+                <input className="w-[100%] pr-2 focus:outline-none"  id="input" type="text" placeholder="Search..." />
                 <button  className="bg-yellow text-primary border-none w-[62px] h-[32px] rounded-md flex justify-center items-center hover:bg-yellow-hover duration-200 active:bg-yellow">
                   <FaSearch />
                 </button>

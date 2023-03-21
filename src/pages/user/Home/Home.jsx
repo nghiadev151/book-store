@@ -10,6 +10,7 @@ import Image2 from "../../../assets/img/Image2.png";
 function Home() {
   const product = [
     {
+      id: 1,
       name: "Doraemon",
       price: "1000",
       author: "Jonathan",
@@ -92,7 +93,7 @@ function Home() {
             <p className=" text-[20px] text-center mb-5 text-white">Leave your email so we can notify you when we have the <br></br> latest book information.</p>
             <div className="flex justify-center">
               <div className="bg-white px-1 py-2 rounded-md flex justify-center items-center basis-1/3 h-10">
-                  <input className="w-[100%] pr-2"  id="input" type="text" placeholder="Search..." />
+                  <input className="w-[100%] pr-2 focus:outline-none"  id="input" type="text" placeholder="Search..." />
               </div>
               <button  className="bg-primary text-white border-none ml-2 px-3 py-2 rounded-md flex justify-center items-center hover:bg-[#6d91ca] duration-200 active:bg-primary">
                   Subscribe

@@ -34,6 +34,11 @@
   background-image: url("././assets/img/bgroud.jpg");
   background-size: cover;
 }
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

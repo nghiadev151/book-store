@@ -15,9 +15,11 @@ function ProductCard({product}) {
               style={{ backgroundImage: `url(${product.img})` }}
               className="rounded-[5px] min-h-[280px] min-w-[219px] bg-cover bg-center"
             ></div>
+            <Link to={`/product/${product.id}`}>
             <div className="absolute top-0 left-0 w-full h-full flex justify-center rounded-md items-start  bg-[#00000065] opacity-0 hover:opacity-100 duration-500" onMouseEnter={handleActive} onMouseLeave={() => setActive(false)}>
                 <button className={`py-2 px-5 m-auto text-primary rounded-sm text-md font-medium bg-yellow ${ active ? 'translate-y-3 duration-700': '-translate-y-4 duration-700'}` }>Add to cart</button>
             </div>
+            </Link>
           </div>
         </div>
         <div>
