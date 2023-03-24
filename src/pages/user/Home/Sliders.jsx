@@ -27,7 +27,7 @@ function Sliders({products}) {
             <FaAngleRight className="text-white text-[25px]"/>
           </button>
           <div className="my-5">
-            <button className="px-5 py-2 border-2 text-primary rounded-md border-yellow font-medium text-sm hover:bg-yellow duration-300">SEE MORE</button>
+            <button className="px-5 py-2 border-2 text-primary rounded-md border-yellow font-medium text-sm hover:bg-yellow active:bg-yellow-hover duration-300">SEE MORE</button>
           </div>
       </div>
   )

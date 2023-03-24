@@ -36,12 +36,12 @@ function ProductDetail() {
         <p className='text-[#616060] mt-3'>{products.description}</p> 
         <div className='flex items-center mt-5'>
           <div className='flex items-center justify-center h-[40px]  w-[120px] rounded-[5px] mr-2 border  border-[#c3c3c3]'>
-          <button className='basis-1/4 bg-[#c3c3c3] px-2.5 h-full text-lg font-bold' onClick={checkQuan}>-</button>
+          <button className='basis-1/4 content-center pb-0.5 h-full bg-[#c3c3c3] px-2.5  text-lg font-bold' onClick={checkQuan}>-</button>
             <input min={1} value={quantity} className='w-full h-full focus:outline-none text-center p-1 appearance-none'  type="number" />
             <button className='basis-1/4 bg-[#c3c3c3] px-2 h-full text-lg font-bold' onClick={()=> setQuantity(quantity+1)}>+</button>
           </div>
         
-          <button className='bg-yellow text-primary font-bold py-2 px-4 rounded'>Add to cart</button>
+          <button className='bg-yellow text-primary font-bold py-2 px-4 rounded hover:bg-yellow-hover active:bg-yellow duration-300'>Add to cart</button>
         </div>
       </div>
     </div>

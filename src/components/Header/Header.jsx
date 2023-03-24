@@ -49,7 +49,7 @@ function Headers() {
       <div className="bg-white decoration-none shadow-sm flex basis-10/12 justify-center">
         {menus.map((menu, i) => (
           <Link
-            to="" key={i}
+            to={`/${menu.value === 'home' ? '': menu.value}`} key={i}
             className="decoration-none my-3 mx-5 text-gray-500 hover:text-primary duration-300"
             style={{ fontSize: "20px" }}
           >
