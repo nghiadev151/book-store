@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect, useLocation} from 'react'
 import UserLayout from '../../../components/common/Layout/UserLayout'
 import ProductCard from '../../../components/ProductCard/ProductCard'
 import Filter from './Filter';
 function Shop() {
+    
     const product = [
         {
           id: 1,
@@ -29,11 +30,11 @@ function Shop() {
       ]);
   return (
     <UserLayout>
-    <div className='container mx-auto my-10 flex justify-between'>
-        <div className='basis-2/12'>
+    <div className='container mx-auto my-10 flex justify-between gap-1'>
+        <div className='basis-2/12 pr-10'>
             <Filter/>
         </div>
-        <div className='basis-10/12 flex flex-wrap gap-3'>
+        <div className=' basis-10/12 flex flex-wrap gap-3'>
                 {products.map((product) =>{
                     return(
                         <ProductCard product={product} key={product.id}/>
