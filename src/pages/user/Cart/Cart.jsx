@@ -17,7 +17,7 @@ function Cart() {
       ];
       const [total, setTotal] = useState(0)
       const [quantity, setQuantity] = useState(1)
-      const [products, setProducts] = useState([...product])
+      const [products, setProducts] = useState([])
       const [pro, setPro] = useState([...product,...product,...product,...product,...product,...product,...product,...product,...product,...product,...product,...product,...product])
       useEffect(() => {
         let total = 0;
@@ -41,7 +41,14 @@ function Cart() {
                 <div className='bg-[#000000] w-[50px] h-[3px] inline-block'></div>
             </div>
             <div className='flex gap-8 my-10 items-start '>
-                <div className='basis-2/3 border-b border-primary'>
+            {products.length === 0 ? 
+                <div className={`basis-2/3 p-4 bg-white  rounded-[8px] mb-5`}>
+                    <div className="flex flex-col items-center justify-center">
+                        <img alt="Your cart is empty" className="block w-[400px]" src="https://mir-s3-cdn-cf.behance.net/projects/404/54b13147340145.Y3JvcCw0MDUsMzE3LDAsNDI.png"/>
+                        <h5 className="absolute bottom-[200px] font-bold text-base">Bạn chưa thêm sản phẩm vào giỏ hàng</h5>
+                    </div>
+                </div>
+                : <div className='basis-2/3 border-b border-primary'>
                 {products.map((p, i) =>{
                     return (
                         <div className='flex mb-3 items-center'>
@@ -77,6 +84,7 @@ function Cart() {
                 })}
                     
                 </div>
+            }
                 <div className='basis-1/3 shadow-lg rounded-md shadow-yellow'>
                     <div className='bg-[#f5f5f5] p-5 rounded-md'>
                         <h1 className='text-[20px] text-left font-medium'>Checkout</h1>
@@ -89,7 +97,7 @@ function Cart() {
                         You can enter the discount code at the checkout page.
                         </div>
                         <div>
-                            <button className='bg-yellow w-full py-4 rounded-md hover:bg-yellow-hover active:bg-yellow duration-300'>Order</button>
+                            <button className='bg-yellow w-full text-primary py-4 rounded-md hover:bg-yellow-hover active:bg-yellow duration-300'>Order</button>
                         </div>
                         <Link to="/shop" className='flex justify-center items-center mt-3'>
                             <FaReply />
