@@ -38,9 +38,11 @@ function Headers() {
               <FaUser className="text-[25px]  inline-block "/>
               <p className=" ml-2 mr-10">Accout</p>
               </Link>
-              <Badge count={5}>
-              <FaShoppingBag className="text-[25px] text-white hover:text-yellow duration-500" />
-              </Badge>
+              <Link to="/cart">
+                <Badge count={5}>
+                <FaShoppingBag className="text-[25px] text-white hover:text-yellow duration-500" />
+                </Badge>
+              </Link>
 
             </div>
           </div>
