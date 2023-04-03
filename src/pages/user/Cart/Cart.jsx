@@ -3,36 +3,41 @@ import UserLayout from '../../../components/common/Layout/UserLayout'
 import { FaTrashAlt, FaReply } from 'react-icons/fa';
 import { Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { StoreContext} from '../../../store';
+import {actions} from '../../../store';
 
 function Cart() {
-    const product = [
-        {
-          id: 1,
-          name: "Doraemon",
-          price: "1000",
-          author: "Jonathan",
-          img: "https://product.hstatic.net/200000346773/product/ed7ca4c4fe284d3a9a4e14d3f724a97e_5c71b000b5e24b3ebca50ea69f912d18_grande.jpeg",
-          description: "Preparing for school doesn't have to be a chore. Introducing All Ready for Preschool, a comprehensive collection of activities, hands-on tools, and more! Vibrantly designed around a kid-friendly family theme, this kit includes preschool essentials conveniently bundled in a sturdy carrying case for learning at home or on the go. The Parent Guide is structured upon an easy-to-follow Ready, Set, Go lesson framework, which eases your child into grade-appropriate subjects through engaging activities and games that progress in difficulty. Best of all, it coordinates with your child's write-and-wipe Activity Book, ensuring that both of you remain on ''the same page. Ready? Set? Go! It's time to help your child take the next step!",
-        },
-      ];
+   
       const [total, setTotal] = useState(0)
+      
+      const [pro, dispatch] = useContext(StoreContext) 
       const [quantity, setQuantity] = useState(1)
-      const [products, setProducts] = useState([])
-      const [pro, setPro] = useState([...product,...product,...product,...product,...product,...product,...product,...product,...product,...product,...product,...product,...product])
+      
+      
+     
+   
       useEffect(() => {
         let total = 0;
-        products.forEach((p) => {
-          total += p.price * quantity;
+        pro.products.forEach((p) => {
+          total += p.price * pro.quantityItem;
         });
         setTotal(total);
-      }, [products, quantity]);
-      const checkQuan = () => {
-        if(quantity <= 1){
-          setQuantity(1)
-        }else {
-        setQuantity(quantity - 1)}
+      }, [pro, pro.quantity]);
+      const decrease = () => {
+        if(pro.quantityItem > 1) {
+            setQuantity(quantity-1)
+            dispatch(actions.setQuantity(quantity - 1))
+        }
       }
-      
+      const increase = () => {
+        setQuantity(quantity + 1);
+        console.log(quantity);
+        dispatch(actions.setQuantity(quantity + 1))
+      }
+      const setQuan = (e) => {
+        dispatch(actions.setQuantity(e.target.value))
+      }
   return (
     <UserLayout>
         <div className='container mx-auto'>
@@ -41,17 +46,17 @@ function Cart() {
                 <div className='bg-[#000000] w-[50px] h-[3px] inline-block'></div>
             </div>
             <div className='flex gap-8 my-10 items-start '>
-            {products.length === 0 ? 
+            {pro.products.length === 0 ? 
                 <div className={`basis-2/3 p-4 bg-white  rounded-[8px] mb-5`}>
                     <div className="flex flex-col items-center justify-center">
                         <img alt="Your cart is empty" className="block w-[400px]" src="https://mir-s3-cdn-cf.behance.net/projects/404/54b13147340145.Y3JvcCw0MDUsMzE3LDAsNDI.png"/>
                         <h5 className="absolute bottom-[200px] font-bold text-base">Bạn chưa thêm sản phẩm vào giỏ hàng</h5>
                     </div>
                 </div>
-                : <div className='basis-2/3 border-b border-primary'>
-                {products.map((p, i) =>{
+                : <div className='basis-2/3 '>
+                {pro.products.map((p, i) =>{
                     return (
-                        <div className='flex mb-3 items-center'>
+                        <div key={i} className='flex mb-3 border-b pb-3 border-primary items-center'>
                         <div className='basis-1/12'>
                             <img className='w-full h-full' src={p.img} alt="" />
                         </div>
@@ -64,13 +69,13 @@ function Cart() {
                         </div>
                        <div className='basis-3/12'>
                             <div className='flex items-center justify-center h-[30px]  w-[100px] rounded-[5px] mr-2 border  border-[#c3c3c3]'>
-                                <button className='basis-1/4 content-center pb-0.5 h-full bg-[#c3c3c3] px-2.5  text-lg font-bold' onClick={checkQuan}>-</button>
-                                <input min={1} value={quantity} className='w-full h-full focus:outline-none text-center p-1 appearance-none'  type="number" />
-                                <button className='basis-1/4 content-center bg-[#c3c3c3] px-2 h-full text-lg font-bold' onClick={()=> setQuantity(quantity+1)}>+</button>
+                                <button className='basis-1/4 content-center pb-0.5 h-full bg-[#c3c3c3] px-2.5  text-lg font-bold' onClick={decrease}>-</button>
+                                <input min={1} value={pro.quantityItem} onChange={setQuan} className='w-full h-full focus:outline-none text-center p-1 appearance-none'  type="number" />
+                                <button className='basis-1/4 content-center bg-[#c3c3c3] px-2 h-full text-lg font-bold' onClick={increase}>+</button>
                             </div>
                        </div>
                         <div className='basis-1/12 flex flex-col justify-start items-end'>
-                            <span className='font-bold text-primary text-[20px]'>{p.price * quantity}$</span>
+                            <span className='font-bold text-primary text-[20px]'>{p.price * pro.quantityItem}$</span>
                         </div>
                         <div className='basis-1/12 flex flex-col justify-start items-end'>
                             <Tooltip placement="top" title="Delete">
