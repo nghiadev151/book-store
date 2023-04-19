@@ -12,6 +12,8 @@ const product = [
 const initialState = {
     products: [...product],
     quantityItem: 1,
+    modal: false,
+    active: 100
 }
 function reducer(state, action) {
     switch (action.type) {
@@ -21,6 +23,16 @@ function reducer(state, action) {
                 ...state, 
                 quantityItem: action.payload
             }
+        case 'SET_SHOW_MODAL' : 
+            return {
+                ...state, 
+                 modal: action.payload
+            }
+        case 'SET_ACTIVE' : 
+            return {
+                ...state, 
+                active: action.payload
+            }    
         default:
             return state;
     }
