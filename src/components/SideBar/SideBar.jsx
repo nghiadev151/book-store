@@ -1,20 +1,26 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { FaSignOutAlt, FaTags, FaUser } from 'react-icons/fa'
+import { FaSignOutAlt, FaTags, FaUser, FaChartBar } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 import { StoreContext,actions } from '../../store';
 function SideBar({children}) {
     const [active, dispatch] = useContext(StoreContext);
-    
+    const [activeIndex, setActiveIndex] = useState();
     const data =[
+        {name: 'Thống kê', icon: <FaChartBar/>, link: ''},
         {name: 'Quản lí sản phẩm', icon: <FaTags/>, link: '/productManager'},
         {name: 'Quản lí khách hàng', icon: <FaUser/>, link: '/customerManager'},
     ]
     const handleActive = (index) => {
-        console.log(index);
         dispatch(actions.setActive(index)) 
-        console.log(active.active);
+        
     }
-
+    useEffect(() => {
+        const activeIndex = JSON.parse(localStorage.getItem('active'));
+        if (activeIndex !== null) {
+            setActiveIndex(activeIndex);
+            console.log(activeIndex);
+        }
+    }, []);
   return (
     <div >
         <div className='max-w-100 h-[40px] bg-primary sticky top-0'>
@@ -36,7 +42,7 @@ function SideBar({children}) {
                     {data.map((item, index) => {
                         return(
                             <Link key={index} onClick={()=>handleActive(index)} to={`/admin${item.link}`} >
-                                <li  className={`cursor-pointer rounded-md ${active.active === index ? 'bg-yellow': 'hover:bg-[#62c7f3c2]' }  py-5 flex items-center justify-start pl-5 w-full h-[30px]`} >
+                                <li  className={`cursor-pointer rounded-md ${activeIndex === index ? 'bg-yellow': 'hover:bg-[#62c7f3c2]' }  py-5 flex items-center justify-start pl-5 w-full h-[30px]`} >
                                     <div className='text-left flex gap-5 justify-start items-center text-white' >
                                         {item.icon}
                                         <p>{item.name}</p>

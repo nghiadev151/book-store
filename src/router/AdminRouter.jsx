@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import Home from '../pages/admin/Home/Home';
 import NewProduct from "../pages/admin/ProductManager/NewProduct";
 import ProductManager from "../pages/admin/ProductManager/ProductManager";
+import CustomerManager from "../pages/admin/CustomerManager/CustomerManager";
 
 
 function AdminRouter() {
@@ -24,6 +25,7 @@ function AdminRouter() {
             <Route>
               <Route path="/" exact Component={Home} />
               <Route path="/productManager" Component={ProductManager} />
+              <Route path="/customerManager" Component={CustomerManager} />
             </Route>
           </Routes>
         </div>

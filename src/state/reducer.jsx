@@ -13,8 +13,9 @@ const initialState = {
     products: [...product],
     quantityItem: 1,
     modal: false,
-    active: 100
+    active: 0
 }
+
 function reducer(state, action) {
     switch (action.type) {
         case 'SET_QUANTITY' : 
@@ -29,10 +30,13 @@ function reducer(state, action) {
                  modal: action.payload
             }
         case 'SET_ACTIVE' : 
+        
+        localStorage.setItem('active', action.payload)
             return {
                 ...state, 
                 active: action.payload
-            }    
+            }  
+              
         default:
             return state;
     }
