@@ -5,33 +5,25 @@ import Carousels from "./Carousel";
 import Sliders from "./Sliders";
 import Image from "../../../assets/img/Image1.png";
 import Image2 from "../../../assets/img/Image2.png";
+import * as productsService from "../../../apiService/productService";
 
 
 function Home() {
-  const product = [
-    {
-      id: 1,
-      name: "Doraemon",
-      price: "1000",
-      author: "Jonathan",
-      img: "https://product.hstatic.net/200000346773/product/ed7ca4c4fe284d3a9a4e14d3f724a97e_5c71b000b5e24b3ebca50ea69f912d18_grande.jpeg",
-    },
-  ];
-  const [products, setProducts] = useState([
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-    ...product,
-  ]);
+  
+  const [products, setProducts] = useState([]);
+  const [bestsellers, setBestsellers] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await productsService.getNewArrivals();
+       setProducts(response.data);
+    }
+    const fetchBestsellers = async () => {
+        const response = await productsService.getBestSellers();
+        setBestsellers(response.data);
+    }
+    fetchProducts();
+    fetchBestsellers();
+  },)
   return (
     <UserLayout>
       <Carousels></Carousels>
@@ -63,7 +55,7 @@ function Home() {
      <div>
         <h1 className="text-primary mt-10 text-[35px] antialiased font-bold">BEST SELLER</h1>
       </div>
-    <Sliders products={products}/>
+    <Sliders products={bestsellers}/>
     <div className="bg-primary p-10  mt-8">
       <div className=" container mx-auto flex ">
         <div className="basis-1/2 text-left content-center my-auto pl-20">

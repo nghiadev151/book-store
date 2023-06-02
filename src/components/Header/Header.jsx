@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Logo from "../../assets/img/Bookworn.svg";
 import { Input, Badge } from "antd";
 import { Link } from "react-router-dom";
@@ -7,8 +7,26 @@ import {
   FaUser,
   FaShoppingBag,
 } from "react-icons/fa";
+import * as userService from '../../apiService/userService.js'
 const { Search } = Input;
 function Headers() {
+  const [user, setUser] = useState(null);
+  const [cart, setCart] = useState(null);
+  useEffect(() => {
+   
+    if(localStorage.getItem('token') === null){
+      return;
+    } else{ 
+      const fetchUser = async () => {
+      const response = await userService.getUserByToken();
+      console.log(response?.data);
+      setUser(response?.data);
+     }
+     fetchUser();
+    }
+    
+     
+  },[]);
   const menus = [
     { value: "home", label: "Home" },
     { value: "about", label: "About" },
@@ -36,7 +54,8 @@ function Headers() {
             <div className="flex">
               <Link to="/login" className="flex justify-center items-end text-white hover:text-yellow duration-500">
               <FaUser className="text-[25px]  inline-block "/>
-              <p className=" ml-2 mr-10">Accout</p>
+              
+              <p className=" ml-2 mr-10">{user === null ? "SignIn/SignUp": user.fullName}</p>
               </Link>
               <Link to="/cart">
                 <Badge count={5}>

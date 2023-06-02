@@ -12,7 +12,7 @@ function ProductCard({product}) {
       <div className="bg-[#F5F8FC] rounded-[5px] py-10 flex items-center justify-center">
         <div className="relative shadow-xl shadow-[#777775]  rounded-[5px] overflow-hidden">
             <div
-              style={{ backgroundImage: `url(${product.img})` }}
+              style={{ backgroundImage: `url(${product.image})` }}
               className="rounded-[5px] min-h-[280px] min-w-[219px] bg-cover bg-center"
             ></div>
             <Link to="">
@@ -24,7 +24,7 @@ function ProductCard({product}) {
         </div>
         <Link to={`/product/${product.id}`}>
           <h1 className="text-[22px] font-light font-serif">{product.name}</h1>
-          <p className="text-[#777777]">{product.author}</p>
+          <p className="text-[#777777]">{product.author.name}</p>
           <span className="line-through text-[#777777] font-semibold font-serif mr-2">1200$</span>
           <span className="text-primary font-semibold font-serif">{product.price}$</span>
         </Link>

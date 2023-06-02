@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useRef, useEffect} from 'react'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ProductCard from '../../../components/ProductCard/ProductCard';
 function Sliders({products}) {
@@ -12,6 +12,7 @@ function Sliders({products}) {
         <div style={{gridTemplateColumns: `repeat(${products.length},  310px)`}} ref={productRef} className={`relative mx-20  rounded-md grid mt-6 py-10 gap-6 scroll-smooth overflow-y-hidden overflow-x-hidden overflow-hidden `} >
           {products.map((product, index) => {
               return(
+                
                 <div key={index} className="relative min-h-full pb-5 rounded-md overflow-hidden origin-center-left hover:scale-110 hover:z-10 hover:shadow-md duration-300">
                   <div>
                   <ProductCard key={index} product={product} />
