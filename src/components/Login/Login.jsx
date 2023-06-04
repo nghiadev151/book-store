@@ -8,6 +8,7 @@ function Login() {
   const navigate = useNavigate();
    const handleLogin = () => {
     const data = {username, password}
+    console.log(data);
       const fetchLogin = async () => {
           const response = await authService.login(data);
           localStorage.setItem('token', JSON.stringify(response?.data));

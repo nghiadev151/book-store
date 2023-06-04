@@ -6,8 +6,8 @@ export const logout = async () => {
     return await publicRequest.post('auth/logout');
 }
 export const register = async (data) => {
-    return await publicRequest.post('auth/register', data);
+    return await publicRequest.postUnAuth('auth/register', data);
 }
 export const refreshToken = async () => {
-    return await publicRequest.post('auth/refresh-token');
+    return await publicRequest.refreshToken('auth/refresh-token');
 }

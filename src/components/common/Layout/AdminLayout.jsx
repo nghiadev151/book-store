@@ -2,6 +2,7 @@ import React from 'react'
 import SideBar from '../../SideBar/SideBar'
 
 import NewProduct from '../../../pages/admin/ProductManager/NewProduct'
+import EditProduct from '../../../pages/admin/ProductManager/EditProduct'
 
 function AdminLayout({children}) {
  
@@ -11,6 +12,7 @@ function AdminLayout({children}) {
       </SideBar>
       <div>
       <NewProduct/>
+      <EditProduct/>
       </div>
      
       

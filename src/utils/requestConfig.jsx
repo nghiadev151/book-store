@@ -10,6 +10,7 @@ export const getUnauth = async (url) => {
     return await axios({
         url: `${baseURL}${url}`,
         method: "GET",
+        
     });
 }
 export const get = async (url) => {
@@ -39,7 +40,7 @@ export const put = async (url, data) => {
         url: `${baseURL}${url}`,
         method: "PUT",
         data,
-        headers: { "Authorization": "Bearer" + localStorage.getItem("token") },
+        headers: { 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("token")).access_token },
     });
 }
 export const del = async (url, data) => {
@@ -47,14 +48,13 @@ export const del = async (url, data) => {
         url: `${baseURL}${url}`,
         method: "DELETE",
         data,
-        headers: { "Authorization": "Bearer" + localStorage.getItem("token") },
+        headers: { 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("token")).access_token },
     });
 }
-export const refreshToken = async (url, data) => {
+export const refreshToken = async (url) => {
     return await axios({
         url: `${baseURL}${url}`,
         method: "POST",
-        data,
-        headers: { "Authorization": "Bearer" + localStorage.getItem("token") },
+        headers: { 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("token")).refresh_token },
     });
 }

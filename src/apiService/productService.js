@@ -6,8 +6,16 @@ export const getNewArrivals = async () => {
 export const getBestSellers = async () => {
     return await publicRequest.getUnauth('products/bestsellers');
 }
-export const getAllProduct = async () => {
-    return await publicRequest.get('products');
+export const getAllProduct = async (page, size) => {
+    return await publicRequest.getUnauth(`products?page=${page}&size=${size}`);
+}
+export const getAllProductAdmin = async (page, size) => {
+    return await publicRequest.get('products', {
+        params: {
+            page,
+            size
+        }
+    });
 }
 export const createProduct = async (data) => {
     return await publicRequest.post('products', data);
@@ -22,19 +30,8 @@ export const updateProductById = async (id, data) => {
     return await publicRequest.put(`products/${id}`, data);
 }
 export const searchProductByName = async (name) => {
-    return await publicRequest.get(`products/search`, {
-        params: {
-            name
-        }
-    });
+    return await publicRequest.getUnauth(`products/search?name=${name}`);
 }
 export const filterProduct = async (publisher, author, minPrice, maxPrice) => {
-    return await publicRequest.get(`products/filter`, {
-        params: {
-            publisher,
-            author,
-            minPrice,
-            maxPrice
-        }
-    });
+    return await publicRequest.get(`products/filter?publisher=${publisher}&author=${author}&minPrice=${minPrice}&maxPrice=${maxPrice}`);
 }

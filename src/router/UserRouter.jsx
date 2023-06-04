@@ -29,6 +29,7 @@ function UserRouter() {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/shop" Component={Shop} />
           <Route path="/cart" Component={Cart} />
+          
         </Route>
       </Routes>
     </div>

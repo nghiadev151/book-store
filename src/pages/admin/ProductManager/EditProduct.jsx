@@ -8,27 +8,28 @@ import {storage, storageRef} from "../../../utils/firebaseConfig"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
 
-function NewProduct() {
+function EditProduct() {
   const [img, setImg] = useState("");
   const [cid, setCid] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
    const [categories, setCategories] = useState([]);
+   const [pro, setProduct] = useState({});
    const [data, setData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    image: '',
-    quantity: '',
+    name: pro.name,
+    description: pro.description,
+    price: pro.price,
+    image: pro.image,
+    quantity: pro.quantity,
     categoryId: cid,
-    author:'',
-    publisher:''
+    author: pro.author?.name,
+    publisher:pro.publisher?.name
    });
-  const [modal, dispatch] = useContext(StoreContext);
+  const [dataEdit, dispatch] = useContext(StoreContext);
   
   const handleModal = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(actions.setShowModal(!modal.modal));
+    dispatch(actions.setShowModalEdit(!dataEdit.modalEdit));
   };
   const handleChange = (e) => {
     setCid(e.target.value);
@@ -44,9 +45,10 @@ function NewProduct() {
     
 
    const fetchCreateProduct = async () => {
-    const res = await product.createProduct(data);
+    console.log(data);
+    const res = await product.updateProductById(dataEdit.idEdit, data);
     if(res.status === 200){
-      toast.success("Add product success!", {
+      toast.success("Update product success!", {
         position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
           hideProgressBar: true,
@@ -55,7 +57,7 @@ function NewProduct() {
           draggable: true,
       });
     }else{
-      toast.error("Add product failed!", {
+      toast.error("Update product failed!", {
         position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
           hideProgressBar: true,
@@ -89,18 +91,37 @@ function NewProduct() {
   }}
 
   useEffect(() => {
+    console.log(dataEdit.idEdit);
     const fetchCategories = async () => {
       const res = await category.getAllCategory();
       setCategories(res?.data);
     };
+    const fetchProductById = async () => {
+      const res = await product.getProductById(dataEdit.idEdit);
+      console.log(res?.data);
+      const newData = {...data}
+      newData.categoryId = res.data.category.id;
+      newData.author = res.data.author.name;
+      newData.publisher = res.data.publisher.name;
+      newData.description = res.data.description
+      newData.price = res.data.price
+      newData.name = res.data.name
+      newData.quantity = res.data.quantity
+      setData(newData);
+      setProduct(res.data);
+      setSelectedImage(res?.data.image);
+    }
+    fetchProductById();
     fetchCategories();
-  }, []);
+  }, [dataEdit]);
+  
+   
+    
+  
   
   return (
     <div
-      className={`bg-[#00000085] absolute bottom-0 overflow-y-auto left-0 w-full h-full z-50 ${
-        modal.modal ? "visible" : "invisible"
-      }`}
+      className={`bg-[#00000085] absolute bottom-0 overflow-y-auto left-0 w-full h-full z-50 ${dataEdit.idEdit ? "visible" : "invisible"}`}
     >
       <div className="flex justify-center ">
         <div className="basis-1/3 bg-[#fff] rounded-md shadow-xl px-10  py-5 my-22 mt-4">
@@ -112,7 +133,7 @@ function NewProduct() {
               type="text"
               id="name"
               name="name"
-              value={data.name}
+              defaultValue={pro.name}
               onChange={handleData}
             />
           </div>
@@ -128,7 +149,7 @@ function NewProduct() {
               type="text"
               name="description"
               id="description"
-              value={data.description}
+              defaultValue={pro.description}
               onChange={handleData}
             />
           </div>
@@ -140,7 +161,7 @@ function NewProduct() {
               type="number"
               name="price"
               id="price"
-              value={data.price}
+              defaultValue={pro.price}
               onChange={handleData}
             />
           </div>
@@ -148,7 +169,7 @@ function NewProduct() {
             <label className="block text-left font-medium" htmlFor="quantity">
               Quantity:
             </label>
-            <input className="rounded-sm w-[100%] h-full p-2 mt-1 shadow-sm outline-1 outline-double outline-[#9e9a9ab2]  focus:outline-none focus:ring focus:border-blue-500" id="quantity" type="number" name="quantity" value={data.quantity}  onChange={handleData}/>
+            <input className="rounded-sm w-[100%] h-full p-2 mt-1 shadow-sm outline-1 outline-double outline-[#9e9a9ab2]  focus:outline-none focus:ring focus:border-blue-500" id="quantity" type="number" name="quantity" defaultValue={pro.quantity}  onChange={handleData}/>
           </div>
           <div className="mb-3 text-left flex justify-around items-center gap-4">
           <div className="basis-1/3">
@@ -158,6 +179,7 @@ function NewProduct() {
               <select
               className="rounded-sm w-[100%] h-full p-2 mt-1 shadow-sm outline-1 outline-double outline-[#9e9a9ab2]  focus:outline-none focus:ring focus:border-blue-500"
                  style={{ width: '100%' }}
+                
                 onChange={handleChange}>
                 {categories.map((category, index) => (
                   <option key={index} value={category.id}>{category.name}</option>
@@ -170,6 +192,7 @@ function NewProduct() {
                 Author:
               </label>
               <input className="rounded-sm w-[100%] h-full p-2 mt-1 shadow-sm outline-1 outline-double outline-[#9e9a9ab2]  focus:outline-none focus:ring focus:border-blue-500" name="author"
+              defaultValue={pro.author?.name}
                 // style={{ width: '30%' }}
                 onChange={handleData}
               />
@@ -180,6 +203,7 @@ function NewProduct() {
               </label>
               <input className="rounded-sm w-[100%] h-full p-2 mt-1 shadow-sm outline-1 outline-double outline-[#9e9a9ab2]  focus:outline-none focus:ring focus:border-blue-500"
               name="publisher"
+              defaultValue={pro.publisher?.name}
                 // style={{ width: '30%' }}
                 onChange={handleData}
               />
@@ -203,7 +227,7 @@ function NewProduct() {
               onClick={handleSubmit}
               className="text-left text-[#10552a] text-[18px] font-medium bg-[#2dd51d82] px-3 py-2 mx-2 rounded-md"
             >
-              Add New Product
+              Update Product
             </button>
             <button
               className="text-left text-[#8b1d1d] text-[18px] font-medium bg-[#f7464e82] px-3 py-2 rounded-md"
@@ -218,4 +242,4 @@ function NewProduct() {
   );
 }
 
-export default NewProduct;
+export default EditProduct;
