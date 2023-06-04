@@ -51,6 +51,7 @@ const [searchResult, setSearchResult] = useState([]);
   
   
   useEffect(() => {
+    console.log("load lại interval");
     const tmp =  () => {
       if(localStorage.getItem('token') !== null){ 
         const fetchUser = async () => {
@@ -74,7 +75,7 @@ const handleSearch = () => {
   searchProduct();
 }
   useEffect(() => {
-    console.log(search.length);
+    console.log("load lại");
     if(search.length > 0) {
       searchProduct();
       if(searchResult.length <= 0) {

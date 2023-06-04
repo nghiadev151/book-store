@@ -14,6 +14,7 @@ function EditProduct() {
   const [selectedImage, setSelectedImage] = useState(null);
    const [categories, setCategories] = useState([]);
    const [pro, setProduct] = useState({});
+   const [isFirst, setIsFirst] = useState(true)
    const [data, setData] = useState({
     name: pro.name,
     description: pro.description,
@@ -33,7 +34,7 @@ function EditProduct() {
   };
   const handleChange = (e) => {
     setCid(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
   const handleData = (e) => {
     const newData = {...data};
@@ -45,7 +46,7 @@ function EditProduct() {
     
 
    const fetchCreateProduct = async () => {
-    console.log(data);
+    // console.log(data);
     const res = await product.updateProductById(dataEdit.idEdit, data);
     if(res.status === 200){
       toast.success("Update product success!", {
@@ -66,7 +67,7 @@ function EditProduct() {
           draggable: true,
       });
     }
-    console.log(res);
+    // console.log(res);
    }
    fetchCreateProduct();
     
@@ -91,14 +92,18 @@ function EditProduct() {
   }}
 
   useEffect(() => {
-    console.log(dataEdit.idEdit);
+    if(isFirst || dataEdit.idEdit === undefined){
+      setIsFirst(false);
+      return;
+    }
+    // console.log(dataEdit.idEdit);
     const fetchCategories = async () => {
       const res = await category.getAllCategory();
       setCategories(res?.data);
     };
     const fetchProductById = async () => {
       const res = await product.getProductById(dataEdit.idEdit);
-      console.log(res?.data);
+      // console.log(res?.data);
       const newData = {...data}
       newData.categoryId = res.data.category.id;
       newData.author = res.data.author.name;
@@ -113,7 +118,7 @@ function EditProduct() {
     }
     fetchProductById();
     fetchCategories();
-  }, [dataEdit]);
+  }, [dataEdit.idEdit]);
   
    
     

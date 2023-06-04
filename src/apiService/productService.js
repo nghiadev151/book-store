@@ -10,12 +10,7 @@ export const getAllProduct = async (page, size) => {
     return await publicRequest.getUnauth(`products?page=${page}&size=${size}`);
 }
 export const getAllProductAdmin = async (page, size) => {
-    return await publicRequest.get('products', {
-        params: {
-            page,
-            size
-        }
-    });
+    return await publicRequest.get(`products?page=${page}&size=${size}`);
 }
 export const createProduct = async (data) => {
     return await publicRequest.post('products', data);

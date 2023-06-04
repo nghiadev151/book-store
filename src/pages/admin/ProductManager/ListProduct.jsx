@@ -2,22 +2,38 @@ import { Link } from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import * as productService from '../../../apiService/productService';
 import { useContext } from 'react'
+import { Pagination } from 'antd'
 import { StoreContext } from '../../../store'
 import { actions } from '../../../store'
 import { toast } from "react-toastify";
 function ListProduct() {
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
   const [modal, dispatch] = useContext(StoreContext)
 
   const [products, setProducts] = useState([]);
   const fetchProducts = async () => {
-    const response = await productService.getAllProductAdmin();
-    console.log(response?.data);
-    setProducts(response?.data.content);
+  
+      const response = await productService.getAllProductAdmin(page,pageSize);
+      setProducts(response?.data.content);
+    // console.log(pro);
+  }
+  const onShowSizeChange = (current, pageSize) => {
+    setPage(current-1);
+    setPageSize(pageSize);
+    console.log(current, pageSize);
+  }
+  const handlePageChange = (page) => {
+    if(page === 1){
+      setPage(0);
+    } else{ setPage(page-1);}
+   
+    console.log(page);
   }
   useEffect(() => {
     
     fetchProducts();
-  }, [])
+  }, [modal, page, pageSize])
 const handleModal = (id) => {
   dispatch(actions.setShowModalEdit(!modal.modalEdit, id))
  
@@ -119,6 +135,9 @@ const handleDelete = (id) => {
           </tbody>
         </table>
         
+      </div>
+      <div className='my-5'>
+        <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}  onChange={handlePageChange}  defaultCurrent={1} total={50} />
       </div>
     </div>
   );
