@@ -19,14 +19,15 @@ function Cart() {
 
       const fetchCart = async () => {
         const res = await cartService.getCart();
-        // console.log(res.data.cartItems);
+        if(res.status === 400){
+            return
+        }
         setProducts(res.data)
         
         
        }
       useEffect(() => {
         if(localStorage.getItem('token') === null){
-            
             setProducts([]);
             navigate('/login');
             return;
@@ -37,21 +38,16 @@ function Cart() {
       const decrease = (id, q) => { 
         if(q > 1){
             const newData = {productId: id, quantity: q - 1}
-
             fetchUpdateQuan(newData);
         }
-       
       }
       const increase = (id, q) => {
          const newData = {productId: id, quantity: q + 1}
-        console.log(newData);
          fetchUpdateQuan(newData);
         
       }
       const fetchUpdateQuan = async (data) => {
         const res = await cartService.updateQuantity(data);
-        
-        console.log(res);
         fetchCart();
     }
     const handleDelete = (id) => {

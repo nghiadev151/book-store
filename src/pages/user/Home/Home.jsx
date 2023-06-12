@@ -24,7 +24,7 @@ function Home() {
     }
     fetchProducts();
     fetchBestsellers();
-  },)
+  },[])
   return (
     <UserLayout>
       <Carousels></Carousels>

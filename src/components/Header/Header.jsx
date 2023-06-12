@@ -79,7 +79,6 @@ const handleLanguage = (lng) => {
   }
 
   useEffect(() => {
-    console.log("load");
     if(localStorage.getItem('token') !== null){
       const fetchCart = async() =>{
         const response = await cartService.getCart();

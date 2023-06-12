@@ -4,9 +4,9 @@ import * as authService from '../../../apiService/authService'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as userService from '../../../apiService/userService';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 function LoginAdmin() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const toastConfig = {
     position: "top-right",
@@ -16,12 +16,8 @@ function LoginAdmin() {
     pauseOnHover: true,
     draggable: true
   }
-   const handleLogin = () => {
-    if(username === '' || password === ''){
-      toast.warning('Please enter username and password!', toastConfig);
-      return
-    }
-    const data = {username, password}
+   const handleLogin = (values) => {
+    const data = {username:values.username, password:values.password}
     console.log(data);
       const fetchLogin = async () => {
         try {
@@ -29,6 +25,11 @@ function LoginAdmin() {
           localStorage.setItem('token', JSON.stringify(response?.data));
             if(localStorage.getItem('token') !== null){ 
               const response = await userService.getUserByToken();
+              if(response?.data.roles !== 'ROLE_ADMIN'){
+                toast.error("Login failed username invalid!", toastConfig);
+                localStorage.removeItem('token');
+                return;
+              }
               console.log(response?.data);
               localStorage.setItem('user', JSON.stringify(response?.data));
               console.log(JSON.parse(localStorage.getItem('user')).roles);
@@ -43,7 +44,7 @@ function LoginAdmin() {
           }
         } catch (error) {
           if(error.response && error.response.status === 403){
-            toast.error("Login failed!", toastConfig);
+            toast.error("Login failed username or password invalid!", toastConfig);
           }
         }
           
@@ -51,17 +52,32 @@ function LoginAdmin() {
       fetchLogin();
      
     }
-    
+    const validationSchema = Yup.object().shape({
+      username: Yup.string().required('Username is required'),
+      password: Yup.string().required('Password is required').min(4, 'Password must be at least 4 characters').max(20, 'Password must be at most 20 characters'),
+      })
+      const initialValues = {
+      username: '',
+      password: '',
+      }
   return (
     <div id="bg" className="w-full flex justify-center items-center h-screen">
-      <div className='bg-[#000000c4] p-10 rounded-md w-[400px] h-[350px]'>
+      <div className='bg-[#000000c4] p-10 rounded-md w-[400px] h-[400px]'>
         <div >
           <h1 className='font-bold text-white text-4xl mb-4'>Login Admin</h1>
+          <Formik 
+            onSubmit={(values)=>handleLogin(values)}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+          >
+            <Form>
           <div className='shadow-md'>
-            <input type="text" required className='rounded-sm w-[100%] h-[35px] p-3 mb-4 shadow-sm  focus:outline-none focus:ring focus:border-blue-500' placeholder='Username...' onChange={(e) => setUsername(e.target.value)}/>
+            <Field type="text" required name="username" className='rounded-sm w-[100%] h-[35px] p-3  shadow-sm  focus:outline-none focus:ring focus:border-blue-500' placeholder='Username...' />
+            <ErrorMessage name="username" component="div" className='text-[#ff3842] text-left' />
           </div>
           <div>
-            <input type="password" required className='rounded-sm w-[100%] h-[35px] p-3 focus:outline-none focus:ring focus:border-blue-500' placeholder='Password...' onChange={(e) => setPassword(e.target.value)}/>
+            <Field type="password" required name="password" className='rounded-sm w-[100%] h-[35px] mt-4 p-3 focus:outline-none focus:ring focus:border-blue-500' placeholder='Password...' />
+            <ErrorMessage name="password" component="div" className='text-[#ff3842] text-left' />
             <div className='flex justify-end mb-1'>
             <Link to="/" className='block  text-yellow hover:text-yellow-hover active:text-yellow'>Forgot password?</Link>
             </div>
@@ -71,9 +87,11 @@ function LoginAdmin() {
           </div>
 
           <div>
-            <button className='bg-yellow rounded-sm py-3 px-20 text-primary font-bold text-md hover:bg-yellow-hover duration-300 active:bg-yellow  ' onClick={handleLogin}>Login</button>
+            <button className='bg-yellow rounded-sm py-3 px-20 text-primary font-bold text-md hover:bg-yellow-hover duration-300 active:bg-yellow  ' >Login</button>
           </div>
           <Link to="/" className='block text-center text-white mt-4 hover:text-yellow duration-500'>Back to home</Link>
+          </Form>
+          </Formik>
         </div>
       </div>
 

@@ -22,7 +22,6 @@ function ProductDetail() {
         setQuantity(quantity - 1)}
       }
       useEffect(() => {
-        console.log(id);
         const fetchProduct = async() =>{
           const res = await productService.getProductById(id);
           setProducts(res.data)
@@ -90,7 +89,7 @@ function ProductDetail() {
         <div className='flex items-center mt-5'>
           <div className='flex items-center justify-center h-[40px]  w-[120px] rounded-[5px] mr-2 border  border-[#c3c3c3]'>
           <button className='basis-1/4 content-center pb-0.5 h-full bg-[#c3c3c3] px-2.5  text-lg font-bold' onClick={checkQuan}>-</button>
-            <input min={1} value={quantity} className='w-full h-full focus:outline-none text-center p-1 appearance-none'  type="number" />
+            <input min={1} value={quantity} onChange={(e)=>setQuantity(e.target.value)} className='w-full h-full focus:outline-none text-center p-1 appearance-none'  type="number" />
             <button className='basis-1/4 bg-[#c3c3c3] px-2 h-full text-lg font-bold' onClick={()=> setQuantity(quantity+1)}>+</button>
           </div>
         

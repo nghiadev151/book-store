@@ -35,7 +35,6 @@ function Filter({onDataChange}) {
     useEffect(() => {
         const fetchBrand = async () => {
             const response = await publisherService.getAllPublisher();
-            console.log(response?.data);
             setBrand(response?.data);
         }
         fetchBrand();
@@ -47,9 +46,7 @@ function Filter({onDataChange}) {
     },[]);
     useEffect(() => {
         const filter = async () => {
-           console.log(publisher, author, minPrice, maxPrice);
             const response = await productService.filterProduct(publisher, author, minPrice, maxPrice);
-            console.log(response?.data);
             onDataChange(response?.data);
         }
         filter();

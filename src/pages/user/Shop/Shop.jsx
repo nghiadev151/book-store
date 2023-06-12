@@ -16,18 +16,15 @@ function Shop() {
       const onShowSizeChange = (current, pageSize) => {
         setPage(current-1);
         setPageSize(pageSize);
-        console.log(current, pageSize);
       }
       const handlePageChange = (page) => {
         if(page === 1){
           setPage(0);
         } else{ setPage(page-1);}
        
-        console.log(page);
       }
       useEffect(() => {
         const fetchProducts = async () => {
-          console.log(page,pageSize);
           const response = await productsService.getAllProduct(page,pageSize);
           
           setTotal(response?.data.totalElements);

@@ -47,8 +47,7 @@ function reducer(state=initialState, action) {
                 ...state, 
                 active: action.payload
             } 
-            case 'SET_QUANTITY_CART' : 
-            console.log("quanRedu: "+action.payload);
+            case 'SET_QUANTITY_CART' :
                 return {
                     ...state, 
                     quantityItem: action.payload
