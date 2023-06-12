@@ -4,6 +4,7 @@ import * as authorService from '../../../apiService/authorService';
 import * as publisherService from '../../../apiService/publisherService';
 import * as productService from '../../../apiService/productService';
 import { useTranslation } from 'react-i18next';
+import { formatCurrency } from '../../../utils/format';
 import "./style.css"
 function Filter({onDataChange}) {
     const { t } = useTranslation();
@@ -80,7 +81,7 @@ function Filter({onDataChange}) {
         <div>
             <h2 className='text-left font-bold uppercase mb-2'>{t('price')}</h2>
             <Slider range={{draggableTrack: true,}} max={500} defaultValue={[0, 500]} onChange={onChangePrice} />
-            <p><span>{minPrice}$</span> - <span>{maxPrice}$</span></p>
+            <p><span>{formatCurrency(minPrice)}</span> - <span>{formatCurrency(maxPrice)}</span></p>
         </div>
     </div>
   )
