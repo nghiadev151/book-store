@@ -1,7 +1,9 @@
 import React, {useRef, useEffect} from 'react'
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ProductCard from '../../../components/ProductCard/ProductCard';
+import { useTranslation } from 'react-i18next';
 function Sliders({products}) {
+  const {t} = useTranslation();
   const productRef = useRef()
   const scroll = (scrollOffset) => {
       productRef.current.scrollLeft += scrollOffset;
@@ -28,7 +30,7 @@ function Sliders({products}) {
             <FaAngleRight className="text-white text-[25px]"/>
           </button>
           <div className="my-5">
-            <button className="px-5 py-2 border-2 text-primary rounded-md border-yellow font-medium text-sm hover:bg-yellow active:bg-yellow-hover duration-300">SEE MORE</button>
+            <button className="px-5 py-2 border-2 text-primary rounded-md border-yellow font-medium text-sm hover:bg-yellow active:bg-yellow-hover duration-300">{t('sea-more')}</button>
           </div>
       </div>
   )

@@ -6,10 +6,11 @@ import Sliders from "./Sliders";
 import Image from "../../../assets/img/Image1.png";
 import Image2 from "../../../assets/img/Image2.png";
 import * as productsService from "../../../apiService/productService";
+import { useTranslation } from "react-i18next";
 
 
 function Home() {
-  
+  const {t} = useTranslation();
   const [products, setProducts] = useState([]);
   const [bestsellers, setBestsellers] = useState([]);
   useEffect(() => {
@@ -28,7 +29,7 @@ function Home() {
     <UserLayout>
       <Carousels></Carousels>
       <div>
-        <h1 className="text-primary mt-10 text-[35px] antialiased font-bold">NEW ARRIVALS</h1>
+        <h1 className="text-primary mt-10 text-[35px] antialiased font-bold">{t('new-arrival')}</h1>
       </div>
       <Sliders products={products}/>
     
@@ -53,7 +54,7 @@ function Home() {
       </div>
      </div>
      <div>
-        <h1 className="text-primary mt-10 text-[35px] antialiased font-bold">BEST SELLER</h1>
+        <h1 className="text-primary mt-10 text-[35px] antialiased font-bold">{t('best-seller')}</h1>
       </div>
     <Sliders products={bestsellers}/>
     <div className="bg-primary p-10  mt-8">

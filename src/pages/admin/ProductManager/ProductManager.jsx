@@ -33,7 +33,7 @@ function ProductManager() {
   //   searchProduct();
   // }, [search])
   return (
-    <AdminLayout>
+    <AdminLayout >
     <div className='flex justify-between items-center'>
         
         <div className='bg-[#2dd51d82] w-[200px] cursor-pointer flex items-center justify-center rounded-md py-2 px-3' onClick={handleModal}>

@@ -20,11 +20,14 @@ export const get = async (url) => {
         headers: { 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("token")).access_token },
     });
 }
-export const postUnAuth = async (url, data) => {
+export const postUnAuth = async (url, data, contentType) => {
     return await axios({
         url: `${baseURL}${url}`,
         method: "POST",
         data,
+        headers: {
+            'Content-Type': contentType,
+        },
     });
 }
 export const post = async (url, data) => {

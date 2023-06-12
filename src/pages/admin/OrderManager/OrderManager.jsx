@@ -1,12 +1,13 @@
 import React from 'react'
 import AdminLayout from '../../../components/common/Layout/AdminLayout'
+import ListOrder from './ListOrder'
 
-function CustomerManager() {
+function OrderManager() {
   return (
     <AdminLayout>
-        sdsdsd
+       <ListOrder/>
     </AdminLayout>
   )
 }
 
-export default CustomerManager
+export default OrderManager

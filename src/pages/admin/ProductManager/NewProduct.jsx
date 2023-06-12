@@ -44,6 +44,7 @@ function NewProduct() {
     
 
    const fetchCreateProduct = async () => {
+    console.log(data);
     const res = await product.createProduct(data);
     if(res.status === 200){
       toast.success("Add product success!", {
@@ -98,7 +99,7 @@ function NewProduct() {
   
   return (
     <div
-      className={`bg-[#00000085] absolute bottom-0 overflow-y-auto left-0 w-full h-full z-50 ${
+      className={`bg-[#00000085] absolute top-0 bottom-0 left-0 w-full h-full z-50 ${
         modal.modal ? "visible" : "invisible"
       }`}
     >

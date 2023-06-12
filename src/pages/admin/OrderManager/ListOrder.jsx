@@ -1,27 +1,23 @@
 import { Link } from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import * as productService from '../../../apiService/productService';
+import * as orderService from '../../../apiService/OrderService';
 import { useContext } from 'react'
 import { Pagination } from 'antd'
 import { StoreContext } from '../../../store'
 import { actions } from '../../../store'
 import { formatCurrency } from '../../../utils/format';
 import { toast } from "react-toastify";
-function ListProduct() {
+function ListOrder() {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [total, setTotal] = useState(40);
   const [modal, dispatch] = useContext(StoreContext)
 
-  const [products, setProducts] = useState([]);
-  const fetchProducts = async () => {
-  
-      const response = await productService.getAllProductAdmin(page,pageSize);
-      // const res = await productService.getAll();
-        setTotal(response?.data.totalElements);
-      
-      setProducts(response?.data.content);
- 
+  const [orders, setOrders] = useState([]);
+  const fetchOrders = async () => {
+    console.log(page, pageSize);
+      const response = await orderService.getOrders(page,pageSize);
+      setOrders(response?.data.content);
+    // console.log(pro);
   }
   const onShowSizeChange = (current, pageSize) => {
     setPage(current-1);
@@ -36,20 +32,18 @@ function ListProduct() {
     console.log(page);
   }
   useEffect(() => {
-    
-    fetchProducts();
+    fetchOrders();
   }, [modal, page, pageSize])
 const handleModal = (id) => {
-  dispatch(actions.setShowModalEdit(!modal.modalEdit, id))
+  dispatch(actions.setShowModalEditOrder(!modal.modalEditOrder, id))
  
 }
 const handleDelete = (id) => {
   const fetchDelete = async () => {
-    console.log("id: " + id);
     try {
-    const res = await productService.deleteProductById(id);
+    const res = await orderService.cancelOrder(id);
       if(res.status === 200){
-        toast.success("Delete product success!", {
+        toast.success("Delete order success!", {
           position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             hideProgressBar: true,
@@ -57,11 +51,11 @@ const handleDelete = (id) => {
             pauseOnHover: true,
             draggable: true,
         });
-        fetchProducts();
+        fetchOrders();
       }
     } catch (error) {
       if(error.response && error.response.status === 403){
-        toast.error("Delete product failed!", {
+        toast.error("Delete order failed!", {
           position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
             hideProgressBar: true,
@@ -79,8 +73,8 @@ const handleDelete = (id) => {
   fetchDelete();
 }
   return (
-    <div >
-      <div className=" mt-3 overflow-x-auto z-10 shadow-md sm:rounded-lg ">
+    <div>
+      <div className="relative mt-3 overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-[#6b7280] table-auto">
           <thead className="text-sm text-[#374151] uppercase bg-[#f9fafb] ">
             <tr>
@@ -88,49 +82,42 @@ const handleDelete = (id) => {
                 ID
               </th>
               <th scope="col" className="px-6 py-3">
-                Product name
+                Customer
               </th>
               <th scope="col" className="px-6 py-3">
-                Image
+               Phone
               </th>
               <th scope="col" className="px-6 py-3 text-center">
-                Quantity input
+                Address
               </th>
               <th scope="col" className="px-6 py-3">
-                Status
+                Total
               </th>
-              <th scope="col" className="px-6 py-3">
-                Price
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Category
-              </th>
+              
               <th scope="col" className="px-6 py-3">
                 Action
               </th>
             </tr>
           </thead>
           <tbody>
-          {products.map((product, index) => (
+          {orders.map((order, index) => (
             <tr key={index} className="bg-white">
               <td className="px-6 py-4 font-medium text-[#111827] whitespace-nowrap">
-                {product.id}
+                {order.id}
               </td>
-              <td className="px-6 py-4">{product.name}</td>
+              <td className="px-6 py-4">{order.user?.fullName}</td>
               <td className="px-6 py-4">
-                <img src={product.image} alt="" className="w-10 h-14" />
+                {order.phone}
               </td>
-              <td className="text-center px-6 py-4">{product.quantity}</td>
-              <td className="px-6 py-4">{product.quantity - product.sales <= 0 ? 'Hết hàng': 'Còn hàng'}</td>
-              <td className="px-6 py-4">{formatCurrency(product.price)}</td>
-              <td className="px-6 py-4">{product.category.name}</td>
+              <td className="text-center px-6 py-4">{order.address}</td>
+              <td className="px-6 py-4">{formatCurrency(order.totalPrice)}</td>
               <td className="px-6 py-4">
-                <Link className="font-medium text-[#3b82f6] hover:underline" onClick={()=>handleModal(product.id)}>
+                <Link className="font-medium text-[#3b82f6] hover:underline" onClick={()=>handleModal(order.id)}>
                   Edit
                 </Link>
                 <span
                   className="ml-2 cursor-pointer font-medium text-[#3b82f6] hover:underline"
-                  onClick={()=>handleDelete(product.id)}
+                  onClick={()=>handleDelete(order.id)}
                 >
                   Delete
                 </span>
@@ -141,11 +128,11 @@ const handleDelete = (id) => {
         </table>
         
       </div>
-      <div className='mt-5 mb-7'>
-        <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}  onChange={handlePageChange}  defaultCurrent={1} total={total} />
+      <div className='my-5'>
+        <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}  onChange={handlePageChange}  defaultCurrent={1} total={orders.length} />
       </div>
     </div>
   );
 }
 
-export default ListProduct;
+export default ListOrder;

@@ -47,26 +47,36 @@ function EditProduct() {
 
    const fetchCreateProduct = async () => {
     // console.log(data);
-    const res = await product.updateProductById(dataEdit.idEdit, data);
-    if(res.status === 200){
-      toast.success("Update product success!", {
-        position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-      });
-    }else{
-      toast.error("Update product failed!", {
-        position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-      });
+    try{
+      console.log(data);
+      const res = await product.updateProductById(dataEdit.idEdit, data);
+      console.log(res);
+      if(res.status === 200){
+        toast.success("Update product success!", {
+          position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+      }
+    }catch(error){
+        if(error.response.status === 400){
+          toast.error("Update product failed!", {
+            position: toast.POSITION.TOP_RIGHT,
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+          });
+        }
     }
+    
+   
+     
+    
     // console.log(res);
    }
    fetchCreateProduct();

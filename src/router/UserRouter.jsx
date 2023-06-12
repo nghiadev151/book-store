@@ -1,20 +1,30 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Home from "../pages/user/Home/Home";
 import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
 import ProductDetail from "../pages/user/ProductDetail/ProductDetail";
 import Shop from "../pages/user/Shop/Shop";
 import Cart from "../pages/user/Cart/Cart";
+import Checkout from "../pages/user/Checkout/Checkout";
+
+
 function UserRouter() {
+  const [isLogin, setIsLogin] = React.useState(false);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token')
   function ScrollToTop() {
     const { pathname } = useLocation();
 
     useEffect(() => {
+      if(token !== null){
+        setIsLogin(true);
+      }
       window.scrollTo(0, 0);
-    }, [pathname]);
+    }, [pathname, isLogin, token]);
 
     return null;
   }
@@ -23,12 +33,17 @@ function UserRouter() {
       <ScrollToTop />
       <Routes>
         <Route>
-          <Route path="/" exact Component={Home} />
-          <Route path="/login" Component={Login} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/shop" Component={Shop} />
-          <Route path="/cart" Component={Cart} />
+        <Route path="/" exact  element={<Home />} />
+          <Route path="/login" exact  element={<Login />} />
+          <Route path="/register" exact  element={<Register />} />
+          <Route path="/product/:id" exact  element={<ProductDetail />} />
+          <Route path="/checkout" exact  element={<Checkout />} />
+          <Route
+            path="/shop" exact  element={<Shop />} />
+            <Route
+            path="/Cửa hàng" exact  element={<Shop />} />
+          <Route
+            path="/cart" exact element={isLogin ? <Cart /> : <Login/>} />
           
         </Route>
       </Routes>

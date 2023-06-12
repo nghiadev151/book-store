@@ -5,9 +5,11 @@ import ProductCard from '../../../components/ProductCard/ProductCard'
 import Filter from './Filter';
 import * as productsService from '../../../apiService/productService';
 function Shop() {
+   
       const [products, setProducts] = useState([]);
       const [page, setPage] = useState(0);
       const [pageSize, setPageSize] = useState(10);
+      const [total, setTotal] = useState(40);
       const handleFilter = (data) => {
         setProducts(data);
       }
@@ -27,7 +29,9 @@ function Shop() {
         const fetchProducts = async () => {
           console.log(page,pageSize);
           const response = await productsService.getAllProduct(page,pageSize);
-          console.log(response);
+          
+          setTotal(response?.data.totalElements);
+         
         setProducts(response?.data.content);
         }
         fetchProducts();
@@ -48,7 +52,7 @@ function Shop() {
           </div>
       </div>
       <div className='mb-5'>
-        <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}  onChange={handlePageChange}  defaultCurrent={1} total={50} />
+        <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}  onChange={handlePageChange}  defaultCurrent={1} total={total} />
       </div>
       
     </UserLayout>

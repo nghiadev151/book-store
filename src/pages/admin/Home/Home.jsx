@@ -9,7 +9,7 @@ function Home() {
   }, [])
   return (
     <AdminLayout>
-        
+        Thống kê
        
     </AdminLayout>
   )
