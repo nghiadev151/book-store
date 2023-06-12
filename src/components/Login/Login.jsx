@@ -24,7 +24,6 @@ function Login() {
   }
    const handleLogin = (values) => {
     const data = {username:values.username, password:values.password}
-    console.log(data);
       const fetchLogin = async () => {
         try {
           const response = await authService.login(data);
@@ -38,7 +37,6 @@ function Login() {
             if(localStorage.getItem('token') !== null){ 
               const fetchUser = async () => {
               const response = await userService.getUserByToken();
-              console.log(response?.data);
               dispatch(actions.setQuantityCart(response?.data.cart?.cartItems?.length));
               localStorage.setItem('user', JSON.stringify(response?.data));
              }

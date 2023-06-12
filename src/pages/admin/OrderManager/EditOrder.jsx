@@ -20,7 +20,7 @@ function EditOrder() {
   const [dataEdit, dispatch] = useContext(StoreContext);
   
   const handleModal = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     e.stopPropagation();
     dispatch(actions.setShowModalEditOrder(!dataEdit.modalEditOrder));
   };

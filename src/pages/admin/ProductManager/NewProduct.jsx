@@ -26,7 +26,7 @@ function NewProduct() {
   const [modal, dispatch] = useContext(StoreContext);
   
   const handleModal = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     e.stopPropagation();
     dispatch(actions.setShowModal(!modal.modal));
   };
