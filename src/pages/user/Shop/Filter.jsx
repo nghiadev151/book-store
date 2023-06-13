@@ -21,6 +21,7 @@ function Filter({onDataChange}) {
             setPublisher('');
         }
     }
+
     const handleDataAuthor = (value, checked) => {
         if(checked){
            setAuthor(value);
@@ -52,11 +53,13 @@ function Filter({onDataChange}) {
         }
         filter();
     },[author,  publisher, minPrice, maxPrice]);
+    
   return (
     <div className='sticky top-[214px]'>
         <div className=''>
             <h2 className='text-left font-bold uppercase mb-2'>{t('brand')}</h2>
             <div className=' mb-3 scroll-component max-h-[200px] overflow-hidden overflow-y-scroll'>
+            
                 {brand.map((b,index) => {
                     return (
                         <div key={index} className='text-left flex items-center'>
@@ -64,6 +67,7 @@ function Filter({onDataChange}) {
                         </div>
                     )
                 })}
+              
             </div>
         </div>
         <div className=''>
