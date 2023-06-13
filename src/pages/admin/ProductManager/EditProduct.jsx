@@ -21,7 +21,7 @@ function EditProduct() {
     price: pro.price,
     image: pro.image,
     quantity: pro.quantity,
-    categoryId: cid,
+    categoryId: '',
     author: pro.author?.name,
     publisher:pro.publisher?.name
    });
@@ -33,8 +33,12 @@ function EditProduct() {
     dispatch(actions.setShowModalEdit(!dataEdit.modalEdit));
   };
   const handleChange = (e) => {
-    setCid(e.target.value);
-    // console.log(e.target.value);
+    const newCid = e.target.value
+    setCid(newCid);
+    const newData = { ...data };
+  newData.categoryId = newCid;
+  setData(newData);
+    console.log(e.target.value);
   };
   const handleData = (e) => {
     const newData = {...data};
@@ -43,8 +47,9 @@ function EditProduct() {
     setData(newData);
   }
   const handleSubmit = () => {
-    
-
+    const newData = {...data};
+    newData.categoryId = cid;
+    setData(newData);
    const fetchCreateProduct = async () => {
     // console.log(data);
     try{
@@ -194,7 +199,7 @@ function EditProduct() {
               <select
               className="rounded-sm w-[100%] h-full p-2 mt-1 shadow-sm outline-1 outline-double outline-[#9e9a9ab2]  focus:outline-none focus:ring focus:border-blue-500"
                  style={{ width: '100%' }}
-                
+                value={cid}
                 onChange={handleChange}>
                 {categories.map((category, index) => (
                   <option key={index} value={category.id}>{category.name}</option>

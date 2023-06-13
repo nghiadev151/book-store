@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 function ListOrder() {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [total, setTotal] = useState(0);
   const [modal, dispatch] = useContext(StoreContext)
 
   const [orders, setOrders] = useState([]);
@@ -17,6 +18,7 @@ function ListOrder() {
     console.log(page, pageSize);
       const response = await orderService.getOrders(page,pageSize);
       setOrders(response?.data.content);
+      setTotal(response?.data.totalElements);
     // console.log(pro);
   }
   const onShowSizeChange = (current, pageSize) => {
@@ -74,7 +76,7 @@ const handleDelete = (id) => {
 }
   return (
     <div>
-      <div className="relative mt-3 overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="mt-3 overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-[#6b7280] table-auto">
           <thead className="text-sm text-[#374151] uppercase bg-[#f9fafb] ">
             <tr>
@@ -129,7 +131,7 @@ const handleDelete = (id) => {
         
       </div>
       <div className='my-5'>
-        <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}  onChange={handlePageChange}  defaultCurrent={1} total={orders.length} />
+        <Pagination showSizeChanger onShowSizeChange={onShowSizeChange}  onChange={handlePageChange}  defaultCurrent={1} total={total} />
       </div>
     </div>
   );
